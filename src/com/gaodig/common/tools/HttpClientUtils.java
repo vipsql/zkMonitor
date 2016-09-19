@@ -8,6 +8,9 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 /**
  * update httpclient to HttpUrlConnection<br>
@@ -20,7 +23,7 @@ public class HttpClientUtils {
 
 	private static final int readTimeout = 20000;
 	private static final int connTimeout = 5000;
-	//private Logger logger = LoggerFactory.getLogger(this.getClass());
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	private static final HttpClientUtils httpClient = new HttpClientUtils();
 	private static final int defaultRetryTimes = 3;
 	public static final int errorStatusCode = 900;
@@ -86,15 +89,15 @@ public class HttpClientUtils {
 		        result.setContent(buffer.toString());
 		        result.setStatusCode(okStatusCode);
 			}catch(MalformedURLException e) {
-				//logger.error(e.getMessage(),e);
+				logger.error(e.getMessage(),e);
 				result.setStatusCode(errorStatusCode);
 				result.setT(e);
 			}catch (IOException e){
-				//logger.error(e.getMessage(),e);
+				logger.error(e.getMessage(),e);
 				result.setStatusCode(errorStatusCode);
 				result.setT(e);
 			}catch(Exception e){
-				//logger.error(e.getMessage(),e);
+				logger.error(e.getMessage(),e);
 				result.setStatusCode(errorStatusCode);
 				result.setT(e);
 			}finally{

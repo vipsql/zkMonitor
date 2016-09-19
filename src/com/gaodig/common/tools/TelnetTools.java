@@ -93,7 +93,7 @@ public class TelnetTools {
 	     * 发送命令,返回执行结果 
 	     * 
 	     * @param command 
-	     * @return 
+	     * @return String
 	     */  
 	    public String sendCommand(String command) {  
 	        try {  

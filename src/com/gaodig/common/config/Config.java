@@ -2,19 +2,21 @@ package com.gaodig.common.config;
 
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Config {
-	
-	
+	private Logger logger = LoggerFactory.getLogger(getClass());
 	private String hostname;
 	private String agentPostUrl;
 	private int step;
 	
 	private String	zkHost;
 	private int[] zkPorts;
+
 	
 	public void init(String configPath) throws ConfigurationException{
-		System.out.println("init config");
+		logger.info("init config");
 		PropertiesConfiguration config  = new PropertiesConfiguration(configPath);
 		config.setThrowExceptionOnMissing(true);
 		this.hostname = config.getString("hostname", Utils.getHostNameForLinux());
@@ -30,7 +32,7 @@ public class Config {
 		for (int i = 0; i < jmxPortArray.length; i++) {
 			zkPorts[i] = Integer.parseInt(jmxPortArray[i]);
 		}
-		System.out.println("init OK");
+		logger.info("init OK");
 	}
 
 	public String getHostname() {

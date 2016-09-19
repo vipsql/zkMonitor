@@ -4,13 +4,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.gaodig.common.tools.JacksonUtil;
 import com.gaodig.common.tools.ParseTools;
 import com.gaodig.common.tools.TelnetTools;
 import com.gaodig.zkmon.bean.FalconItem;
 
 public class DataProvider {
-
+	
+	private Logger logger = LoggerFactory.getLogger(getClass());
 	TelnetTools telnet = null;
 
 	/**
@@ -26,7 +30,7 @@ public class DataProvider {
 	 *  wchp 通过路径列出服务器 watch的详细信息。它输出一个与 session相关的路径。
 	 */
 	String[] FourOrder = { "ruok","mntr","cons", "dump", "reqs", "conf", "stat", "wchs", "wchc", "wchp" };
-
+	
 	public List<FalconItem> getMonitorData(String hostname, int port,String endpoint)   {
 		Map<String, String> telnetResultMap = new HashMap<String,String>();
 		telnet = new TelnetTools();
@@ -38,7 +42,7 @@ public class DataProvider {
 		} catch (Exception e) {
 			telnetResultMap.put("alive", "0");
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 		List<FalconItem> items = ParseTools.mntrbuild(telnetResultMap, endpoint, port);
 		return items;
